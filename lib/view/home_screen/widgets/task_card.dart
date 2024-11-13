@@ -21,13 +21,11 @@ class TaskCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //height: 150,
       padding: EdgeInsets.all(15),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
           border: Border.all(
-            color: Colors.black,
-            //  width: 3
+            color: Colors.grey,
           )),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,13 +66,6 @@ class TaskCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              // iscompleted
-              //     ? Icon(
-              //         Icons.task_outlined,
-              //         color: Colors.green,
-              //       )
-              //     : Icon(Icons.pending_actions),
-
               //priority
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),

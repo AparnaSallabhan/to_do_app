@@ -4,9 +4,17 @@ import 'package:to_do_app/model/task_model.dart';
 
 class HomeScreenController with ChangeNotifier {
   final taskBox = Hive.box<TaskModel>("taskBox");
-  List priorityList =["High","Medium","Low"];
+  List priorityList = ["High", "Medium", "Low"];
   List keys = [];
   List<TaskModel> tasks = [];
+  List<TaskModel> filteredTasks = []; //to add filtered tasks
+  List sortingPriorityList = [
+    "All",
+    "High",
+    "Medium",
+    "Low"
+  ]; //for sorting tasks by priority
+
   String? selectedPriority;
   void addTask(
       //to add tasks to taskbox
@@ -15,20 +23,54 @@ class HomeScreenController with ChangeNotifier {
       required String priority}) async {
     await taskBox.add(
         TaskModel(title: title, description: description, priority: priority));
-        getTasks();
-        print(":::::::::::::::::::Task added");
+    getTasks();
+    print(":::::::::::::::::::Task added");
   }
 
+//to get all tasks
   void getTasks() {
     keys = taskBox.keys.toList();
     tasks = taskBox.values.toList();
+    filteredTasks = List.from(tasks);
     print(":::::::::::$tasks");
     notifyListeners();
   }
-  
-  void onDelete(int index){
+
+// to get completed tasks
+  void completedTasks() {
+    filteredTasks = tasks.where((element) => element.isCompleted!).toList();
+    notifyListeners();
+  }
+
+//to get pending tasks
+  void pendingTasks() {
+    filteredTasks = tasks.where((element) => !element.isCompleted!).toList();
+    notifyListeners();
+  }
+
+//to list tasks by priority
+  void getTasksByPriority(int index) {
+    if (index == 0) {
+      getTasks();
+    } else {
+      filteredTasks = tasks
+          .where(
+            (element) => element.priority == sortingPriorityList[index],
+          )
+          .toList();
+    }
+    notifyListeners();
+  }
+
+//for deleting a task
+  void onDelete(int index) {
     taskBox.deleteAt(index);
     getTasks();
   }
 
+  void onTaskCompletion(int index, bool isCompleted) {
+    tasks[index].isCompleted = isCompleted;
+    taskBox.putAt(index, tasks[index]);
+    getTasks();
+  }
 }
