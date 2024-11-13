@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final homeScreenprovider = context.watch<HomeScreenController>();
     TextEditingController titleController = TextEditingController();
     TextEditingController descriptionController = TextEditingController();
-    String? dropValue;
+    String? selectedPriority;
     return Scaffold(
       backgroundColor: Colors.grey[100],
       appBar: AppBar(
@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.black,
         onPressed: () {
           _addTaskMethod(context, titleController, descriptionController,
-              homeScreenprovider, dropValue);
+              homeScreenprovider, selectedPriority);
         },
         child: Icon(
           Icons.add,

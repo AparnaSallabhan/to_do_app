@@ -15,9 +15,8 @@ class HomeScreenController with ChangeNotifier {
     "Low"
   ]; //for sorting tasks by priority
 
-  String? selectedPriority;
+//to add tasks to taskbox
   void addTask(
-      //to add tasks to taskbox
       {required String title,
       required String description,
       required String priority}) async {
@@ -68,6 +67,7 @@ class HomeScreenController with ChangeNotifier {
     getTasks();
   }
 
+//on task completion functionaliity of checkbox
   void onTaskCompletion(int index, bool isCompleted) {
     tasks[index].isCompleted = isCompleted;
     taskBox.putAt(index, tasks[index]);
